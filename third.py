@@ -3,15 +3,24 @@
 #hor_side = int(input("Введите длину стороны соты\n"))
 #ratio = int(input("Введите соотношение звездочек и пробелов\n"))
 
-num_lines = 12
-num_cols = 15
-hor_side = 3
+num_lines = 100
+num_cols = 100
+hor_side = 4
+ratio = 1
 
-mas = [i*2+1 for i in range(0, num_lines) if i*2+1 <= num_lines]
+mas = [i for i in range(1, num_lines+1, hor_side-1) if i <= num_lines]
+#print(mas)
+str1 = " " * (hor_side - 1) + (hor_side) * "*" + " " * (hor_side + (hor_side-2))
+str1_copy = " " * (hor_side - 1) + (hor_side) * "*" + " " * (hor_side + (hor_side-2))
+#print(str1)
+#print()
+
+count = 2
+
+k = 0
 
 for line in range(1,num_lines+1):
     if line in mas:
-        str1 = "."*(hor_side-1)+ hor_side*"*" + "."*(hor_side+1)
         if mas.index(line) % 2 != 0:
             stroka = ""
             i = 2*hor_side-2
@@ -21,6 +30,8 @@ for line in range(1,num_lines+1):
                 stroka += str1[i]
                 i += 1
             print(stroka)
+            k = 0
+            str1_copy = str1
         else:
             stroka = ""
             i = 0
@@ -30,8 +41,55 @@ for line in range(1,num_lines+1):
                 stroka += str1[i]
                 i += 1
             print(stroka)
+            k = 1
+            str1_copy = str1
     else:
-        print()
+        if k == 1:
+            str2 = str1_copy[1:hor_side+1]+str1_copy[hor_side-1:-1]
+            first = str2.find("*")
+            second = str2.rfind("*")
+            str2 = str2[:first+1] + " "*(second-first-1) + str2[second:]
+            str1_copy = str2
+            stroka = ""
+            i = 0
+            while len(stroka) <= num_cols:
+                if i == len(str2) - 1:
+                    i = 0
+                stroka += str2[i]
+                i += 1
+            print(stroka)
 
-print(mas)
+        else:
+            str2 = str1_copy[1:hor_side + 1] + str1_copy[hor_side - 1:-1]
+            str3 = ""
+            for i in str2:
+                if i == " ":
+                    str3 += "*"
+                else:
+                    str3 += " "
+            str1_copy = str2
+            str3 = str3.replace(" *", "**")
+            str3 = str3.replace("* ", "**")
+
+            str4 = ""
+            i = 2 * hor_side - 2
+            while len(str4) < len(str3):
+                if i == len(str3) - 1:
+                    i = 0
+                str4 += str3[i]
+                i += 1
+
+            first = str4.find("*")
+            second = str4.rfind("*")
+            str4 = str4[:first + 1] + " " * (second - first - 1) + str4[second:]
+
+            stroka = ""
+            i = 0
+            while len(stroka) <= num_cols:
+                if i == len(str3) - 1:
+                    i = 0
+                stroka += str4[i]
+                i += 1
+            print(stroka)
+
 
