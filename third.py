@@ -1,6 +1,6 @@
 # Задайте тут свои параметры
-num_lines = 25
-num_cols = 200
+num_lines = 10
+num_cols = 50
 hor_side = 4
 ratio = 3
 
