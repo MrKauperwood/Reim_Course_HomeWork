@@ -1,5 +1,4 @@
 import random
-import time
 
 board = [" ", " ", " ",
          " ", " ", " ",
@@ -16,7 +15,7 @@ current_player = "X"
 def print_board(board):
     print("+-----------------+")
     for i in range(0, 3):
-        print("|  " + board[3 * i + 0] + "  |  " + board[3 * i + 1] + "  |  " + board[3 * i + 2] + "  |")
+        print(f"|  {board[3 * i + 0]}  |  {board[3 * i + 1]}  |  {board[3 * i + 2]}  |")
         print("+-----------------+")
 
 
@@ -31,7 +30,7 @@ def play_game():
         change_player()
 
     if tic_tac_winner == "X" or tic_tac_winner == "Y":
-        print("\n--- Игра окончена!Победил игрок", tic_tac_winner, "---")
+        print(f"\n--- Игра окончена!Победил игрок {tic_tac_winner} ---")
     elif tic_tac_winner is None and tic_tac_drawn == True:
         print("Однако, это ничья!")
 
@@ -44,7 +43,7 @@ def handle_turn(player):
         is_correct = False
         while is_correct == False:
             try:
-                position = input("\nСейчас ход \"" + current_player + "\". Выберите позицию от 1-9:\n")
+                position = input(f"\nСейчас ход \"{current_player}\". Выберите позицию от 1-9:\n")
                 position = int(position) - 1
                 if (position >= 0) and (position < 9):
                     if board[position] == " ":
@@ -58,7 +57,7 @@ def handle_turn(player):
             except:
                 print("\n---Ошибка! Вы ввели неверное значение. Повторите ввод!---")
     else:
-        # Легкий уровень
+        # Ход машины
         simple_machine_intel()
 
 
@@ -155,7 +154,7 @@ def check_diag():
 
 
 def simple_machine_intel():
-    print("\nВаш соперник " + current_player + " сделал свой выбор!\n")
+    print(f"\nВаш соперник {current_player} сделал свой выбор!\n")
     mas_index = []
     sopernik = str
 
@@ -178,29 +177,27 @@ def simple_machine_intel():
 
     if empty_col != None:
         board[empty_col] = current_player
-        print_board(board)
     elif empty_row != None:
         board[empty_row] = current_player
-        print_board(board)
     elif empty_diags != None:
         board[empty_diags] = current_player
-        print_board(board)
     elif empty_col_s != None:
         board[empty_col_s] = current_player
-        print_board(board)
     elif empty_row_s != None:
         board[empty_row_s] = current_player
-        print_board(board)
     elif empty_diags_s != None:
         board[empty_diags_s] = current_player
-        print_board(board)
     else:
-        for i in range(len(board)):
-            if board[i] == " ":
-                mas_index.append(i)
-        random.shuffle(mas_index)
-        board[mas_index[0]] = current_player
-        print_board(board)
+        if board[4] == " ":
+            board[4] = current_player
+        else:
+            for i in range(len(board)):
+                if board[i] == " ":
+                    mas_index.append(i)
+            random.shuffle(mas_index)
+            board[mas_index[0]] = current_player
+
+    print_board(board)
 
 
 def may_win(mas, player):
@@ -216,7 +213,5 @@ def may_win(mas, player):
             return empty
         if count == 2 and empty is None:
             return empty
-
-
 
 play_game()
