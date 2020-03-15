@@ -1,5 +1,9 @@
 import random
 
+
+
+#DOCTEST
+
 board = [" ", " ", " ",
          " ", " ", " ",
          " ", " ", " "]
